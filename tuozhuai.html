@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Title</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #box{
+      width: 100px;
+      height: 100px;
+      background: deepskyblue;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+
+</body>
+<script type="text/javascript">
+
+  var box = document.querySelector('#box')
+  // 元素的初始位置 + 鼠标的距离差
+
+  // 定义元素初始位置
+  var elementPoint = {left:0, top:0}
+  // 定义鼠标的初始位置
+  var startPoint = {left:0, top:0}
+
+  box.onmousedown = function (event) {
+    var event = event || window.event
+    // 元素的初始位置   offsetLeft 元素左边距离父元素的距离
+    elementPoint.left = box.offsetLeft
+    elementPoint.top = box.offsetTop
+    // 鼠标的初始位置
+    startPoint.left = event.clientX
+    startPoint.top = event.clientY
+
+    // 鼠标移动
+    document.onmousemove = function (event) {
+      var event = event || window.event
+      // 鼠标当前位置
+      var nowPonit = {left:0, top:0}
+      nowPonit.left = event.clientX
+      nowPonit.top = event.clientY
+      // 鼠标距离差
+      var disX = nowPonit.left - startPoint.left
+      var disY = nowPonit.top - startPoint.top
+
+      box.style.left = elementPoint.left + disX + 'px'
+      box.style.top = elementPoint.top + disY + 'px'
+    }
+
+    // 鼠标抬起
+    document.onmouseup = function () {
+      document.onmousemove = null
+      document.onmouseup = null
+    }
+  }
+
+</script>
+</html>
